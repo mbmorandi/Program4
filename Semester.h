@@ -11,6 +11,9 @@ class Semester{
         int numFin;
         int weighted[NUM_DIFF_WORK];
         bool finalGradeCalculated;
+        bool progRecorded[MAX_PROG];
+        bool testRecorded[MAX_TESTS];
+        bool finalRecorded;
 
     public:
         //constructors
@@ -24,7 +27,10 @@ class Semester{
         StudentRecord& getStudent(int index);
         bool getFinalGradeCalc();
         int getWeight(int index);
-        
+        bool isProgRecorded(int index);
+        bool isTestRecorded(int index);
+        bool isFinalRecorded();
+
         //setters
         void setNumStudents(int numStu);
         void setNumP(int numP);
@@ -32,6 +38,9 @@ class Semester{
         void setNumF(int numF);
         void setWeight(int a, int b, int c);
         void setFinalGradeCalc(bool tf);
+        void setProgRecorded(int index);
+        void setTestRecorded(int index);
+        void setFinalRecorded(bool tf);
 
         //class methods
         void addStudent(std::string stuName, int stuNum);

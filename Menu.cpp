@@ -8,34 +8,8 @@ using std::endl;
 
 Menu::Menu() : 
     menuIsOpen{false},
-    semesterOpen{false},
-    finalExamGraded{false},
-    programsRecorded{},
-    testsRecorded{}
+    semesterOpen{false}
 {}
-
-//getters
-int Menu::getProgRecord(int index){
-    return programsRecorded[index];   
-}
-int Menu::getTestRecord(int index){
-    return testsRecorded[index];
-}
-bool Menu::finalIsGraded(){
-    return finalExamGraded;
-}
-
-//setters
-//set 1 for yes, 0 for no
-void Menu::recordProgram(int progNum){
-    programsRecorded[progNum] = 1;
-}
-void Menu::recordTest(int testNum){
-    testsRecorded[testNum] = 1;
-}
-void Menu::setFinalIsGraded(bool check){
-    finalExamGraded = check;
-}
 
 //class methods
 void Menu::addStudent(){
@@ -88,8 +62,8 @@ void Menu::recordStudentProgramGrades(){
                 return;
             }
             //keeping track of tests entered into the program
-            if(getProgRecord(test - 1) != 1){
-                recordProgram(test - 1);
+            if(!semester.isProgRecorded(test - 1)){
+                semester.setProgRecorded(test - 1);
             } else {
                 cout << "Program number " << test << " has already been recorded. Exiting to the main screen." << endl;
                 return;
@@ -127,8 +101,8 @@ void Menu::recordStudentTestGrades(){
                 return;
             }
             //keeping track of tests entered into the program
-            if(getTestRecord(test - 1) != 1){
-                recordTest(test - 1);
+            if(!semester.isTestRecorded(test - 1)){
+                semester.setTestRecorded(test - 1);
             } else {
                 cout << "Test number " << test << " has already been recorded. Exiting to the main screen." << endl;
                 return;
@@ -152,7 +126,7 @@ void Menu::recordFinalExamGrade(){
             cout << "There are no finals assigned to this semester. Exiting to the main menu." << endl;
             return;
         } else {
-            if(!finalExamGraded){
+            if(!semester.isFinalRecorded()){
             for(int i = 0; i < semester.getNumStu(); i++){
                 std::cout << "Please enter a grade for student: " << semester.getStudent(i).getName() << std::endl;
                 cin >> grade;
@@ -160,7 +134,7 @@ void Menu::recordFinalExamGrade(){
                     semester.getStudent(i).setFinExGrade(grade);
                 }
             }
-            finalExamGraded = true;
+            semester.setFinalRecorded(true);
             } else {
                 cout << "Final Exams have already been graded. Exiting to the main menu." << endl;
                 return;

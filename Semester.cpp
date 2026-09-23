@@ -7,8 +7,10 @@ Semester::Semester():
     numTest{0},
     numFin{0},
     weighted{0},
-    finalGradeCalculated{false}
-
+    finalGradeCalculated{false},
+    progRecorded{},
+    testRecorded{},
+    finalRecorded{false}
 {}
 
 //getters
@@ -33,6 +35,15 @@ bool Semester::getFinalGradeCalc(){
 int Semester::getWeight(int index){
     return weighted[index];
 }
+bool Semester::isProgRecorded(int index){
+    return progRecorded[index];
+}
+bool Semester::isTestRecorded(int index){
+    return testRecorded[index];
+}
+bool Semester::isFinalRecorded(){
+    return finalRecorded;
+}
 //setters
 void Semester::setNumStudents(int numStu){
     numStudents = numStu;
@@ -54,6 +65,15 @@ void Semester::setWeight(int a, int b, int c){
 }
 void Semester::setFinalGradeCalc(bool tf){
     finalGradeCalculated = tf;
+}
+void Semester::setProgRecorded(int index){
+    progRecorded[index] = true;
+}
+void Semester::setTestRecorded(int index){
+    testRecorded[index] = true;
+}
+void Semester::setFinalRecorded(bool tf){
+    finalRecorded = tf;
 }
 //class methods
 void Semester::addStudent(std::string stuName, int stuNum){
