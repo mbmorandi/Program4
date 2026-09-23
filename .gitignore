@@ -3,6 +3,17 @@ build/
 *.exe
 *.o
 *.obj
+a.out
+*.pdb
+*.ilk
+
+# files the program writes when it runs
+Grades.dat
+Grades.out
+Grades.trn
+
+# editor / IDE
+.vs/
 
 # Google Drive
 desktop.ini

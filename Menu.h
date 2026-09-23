@@ -5,6 +5,7 @@
 
 const std::string DATA_FILE = "Grades.dat";
 const std::string OUTPUT_FILE = "Grades.out";
+const std::string TRANSACTION_FILE = "Grades.trn";
 
 class Menu{
     private:
@@ -13,6 +14,7 @@ class Menu{
         bool setupThisRun; // S already used in this run of the program
         Semester semester;
         std::ofstream outFile; // Grades.out, rewritten each run
+        std::ofstream trnFile; // Grades.trn, rewritten each run
 
     public:
 
@@ -31,7 +33,7 @@ class Menu{
         void printMenu();
         void openMenu();
         void setNewSemester();
-        void writeTransaction(const std::string& message); //need to implement
+        void writeTransaction(const std::string& message);
                
 
 };
