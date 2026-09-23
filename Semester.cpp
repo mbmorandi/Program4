@@ -1,6 +1,21 @@
 #include "Semester.h"
 #include "Menu.h"
 #include <fstream>
+#include <cctype>
+
+static bool nameGreater(const std::string& a, const std::string& b){
+    size_t len = a.size() < b.size() ? a.size() : b.size();
+    for(size_t i = 0; i < len; i++){
+        int ca = std::toupper(static_cast<unsigned char>(a[i]));
+        int cb = std::toupper(static_cast<unsigned char>(b[i]));
+        if(ca != cb){
+            return ca > cb;
+        }
+    }
+    // one name starts with the other, so the shorter one comes first
+    return a.size() > b.size();
+}
+
 //constructors
 Semester::Semester():
     numStudents{0},
@@ -114,7 +129,7 @@ void Semester::sortStudentsAlpha(){
         //simple bubblesort
         for(int i = 0; i < numStudents - 1; i++){
             for(int j = 0; j < numStudents - i - 1; j++){
-                if(std::toupper(students[j].getName()[0]) > std::toupper(students[j+1].getName()[0])){
+                if(nameGreater(students[j].getName(), students[j+1].getName())){
                     temp = students[j+1];
                     students[j+1] = students[j];
                     students[j] = temp;

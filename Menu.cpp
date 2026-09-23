@@ -85,6 +85,8 @@ void Menu::recordStudentProgramGrades(){
                 writeTransaction("P: rejected - program " + to_string(test) + " already recorded");
                 return;
             }
+            // spec: prompt for each student alphabetically
+            semester.sortStudentsAlpha();
             writeTransaction("P: recorded program " + to_string(test) + " grades");
             //printing out students and asking for new student grade
             for(int i = 0; i < semester.getNumStu(); i++){
@@ -132,6 +134,8 @@ void Menu::recordStudentTestGrades(){
                 writeTransaction("T: rejected - test " + to_string(test) + " already recorded");
                 return;
             }
+            // spec: prompt for each student alphabetically
+            semester.sortStudentsAlpha();
             writeTransaction("T: recorded test " + to_string(test) + " grades");
             //printing out students and asking for new student grade
             for(int i = 0; i < semester.getNumStu(); i++){
@@ -157,6 +161,8 @@ void Menu::recordFinalExamGrade(){
             return;
         } else {
             if(!semester.isFinalRecorded()){
+            // spec: prompt for each student alphabetically
+            semester.sortStudentsAlpha();
             writeTransaction("F: recorded final exam grades");
             for(int i = 0; i < semester.getNumStu(); i++){
                 std::cout << "Please enter a grade for student " << semester.getStudent(i).getName() << ": ";
