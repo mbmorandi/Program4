@@ -1,0 +1,17 @@
+===== Grade Book transaction log =====
+No saved grade book found in Grades.dat
+A: rejected - semester not set up or grade book full
+O: rejected - semester not set up
+P: rejected - semester not set up
+S: rejected - invalid number of programs 7
+S: rejected - weights add up to 80, not 100
+S: new semester - 4 programs (50%), 2 tests (20%), 1 final (30%)
+S: rejected - semester already set up this run
+A: added student Smith, Ann, ID 1005
+A: added student Sanders, Bo, ID 42
+A: added student adams, carl, ID 300
+A: rejected - ID 42 already in use
+A: rejected - invalid ID 0 for Lee, Dan
+O: wrote 3 students to Grades.out in alphabetical order
+O: wrote 3 students to Grades.out in student number order
+Q: saved 3 students to Grades.dat

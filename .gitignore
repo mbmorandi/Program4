@@ -11,6 +11,9 @@ a.out
 Grades.dat
 Grades.out
 Grades.trn
+test_runs/
+# ...except the known-good copies the tests compare against
+!tests/expected/**
 
 # editor / IDE
 .vs/

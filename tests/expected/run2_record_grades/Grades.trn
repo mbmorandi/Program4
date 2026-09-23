@@ -1,0 +1,18 @@
+===== Grade Book transaction log =====
+Loaded 3 students from Grades.dat
+P: recorded program 1 grades
+   adams, carl: 90
+   Sanders, Bo: invalid grade 105, not recorded
+   Smith, Ann: 70
+P: rejected - program 1 already recorded
+P: rejected - invalid program number 9
+T: recorded test 1 grades
+   adams, carl: 88
+   Sanders, Bo: 92
+   Smith, Ann: 75
+F: recorded final exam grades
+   adams, carl: 80
+   Sanders, Bo: 90
+   Smith, Ann: 100
+F: rejected - final exam already recorded
+Q: saved 3 students to Grades.dat

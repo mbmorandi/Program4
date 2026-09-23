@@ -1,0 +1,38 @@
+A
+O
+P
+S
+7
+S
+2
+1
+0
+30
+50
+S
+4
+2
+1
+50
+20
+S
+A
+Smith, Ann
+1005
+A
+Sanders, Bo
+42
+A
+adams, carl
+300
+A
+Lee, Dan
+42
+A
+Lee, Dan
+0
+O
+A
+O
+N
+Q

@@ -1,0 +1,10 @@
+===== Grade Book transaction log =====
+Loaded 3 students from Grades.dat
+P: rejected - program 1 already recorded
+C: Sanders, Bo (ID 42) program 1 changed from 0 to 85
+C: rejected - no student with ID 999
+C: rejected - invalid grade type
+C: rejected - invalid test number 3
+G: calculated averages for 3 students
+O: wrote 3 students to Grades.out in student number order
+Q: saved 3 students to Grades.dat

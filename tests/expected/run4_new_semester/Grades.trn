@@ -1,0 +1,10 @@
+===== Grade Book transaction log =====
+Loaded 3 students from Grades.dat
+S: new semester - 0 programs (0%), 2 tests (60%), 1 final (40%)
+P: rejected - no programs this semester
+A: added student Nguyen, Mai, ID 7
+T: recorded test 1 grades
+   Nguyen, Mai: 91
+G: calculated averages for 1 students
+O: wrote 1 students to Grades.out in alphabetical order
+Q: saved 1 students to Grades.dat
