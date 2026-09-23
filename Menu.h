@@ -2,6 +2,8 @@
 #include "Semester.h"
 #include <string>
 
+const std::string DATA_FILE = "Grades.dat";
+
 class Menu{
     private:
         bool menuIsOpen;

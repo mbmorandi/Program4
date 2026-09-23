@@ -413,7 +413,11 @@ void Menu::setNewSemester(){
     
 }
 void Menu::quit(){
-    //FILE OUTPUT GOES HERE
+    // save the grade book, if there is one to save
+    if(semesterOpen){
+        semester.saveData(DATA_FILE);
+        cout << "Grade book saved to " << DATA_FILE << "." << endl;
+    }
     cout << "Exiting the program." << endl;
     menuIsOpen = false;
 }

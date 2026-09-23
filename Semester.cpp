@@ -1,5 +1,6 @@
 #include "Semester.h"
 #include "Menu.h"
+#include <fstream>
 //constructors
 Semester::Semester():
     numStudents{0},
@@ -161,7 +162,49 @@ void Semester::printStudentData(){
 
         }
         std::cout << std::endl;
-        
-    } 
 
+    }
+
+}
+
+// write to Grades.dat 
+void Semester::saveData(const std::string& fileName){
+    std::ofstream out(fileName);
+    if(!out){
+        std::cout << "Could not open " << fileName << " for saving." << std::endl;
+        return;
+    }
+
+    // semester settings
+    out << numProg << " " << numTest << " " << numFin << std::endl;
+    out << weighted[0] << " " << weighted[1] << " " << weighted[2] << std::endl;
+
+    // recorded flags
+    for(int i = 0; i < numProg; i++){
+        out << progRecorded[i] << " ";
+    }
+    out << std::endl;
+    for(int i = 0; i < numTest; i++){
+        out << testRecorded[i] << " ";
+    }
+    out << std::endl;
+    out << finalRecorded << std::endl;
+    out << finalGradeCalculated << std::endl;
+
+    // students
+    out << numStudents << std::endl;
+    for(int i = 0; i < numStudents; i++){
+        StudentRecord& student = students[i];
+        out << student.getName() << std::endl;
+        out << student.getStuID();
+        for(int j = 0; j < numProg; j++){
+            out << " " << student.getProgGrade(j);
+        }
+        for(int j = 0; j < numTest; j++){
+            out << " " << student.getTestGrade(j);
+        }
+        out << " " << student.getFinalExGrade();
+        out << " " << student.getProgAvg();
+        out << " " << student.getTestAvg() << std::endl;
+    }
 }
