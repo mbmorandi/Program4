@@ -16,3 +16,13 @@ if(MSVC)
 else()
     target_compile_options(Program4 PRIVATE -Wall -Wextra)
 endif()
+
+# test driver: runs the grade book classes against tests/inputs
+add_executable(run_tests
+    tests/run_tests.cpp
+    Menu.cpp
+    Semester.cpp
+    StudentRecord.cpp
+)
+target_include_directories(run_tests PRIVATE ${CMAKE_SOURCE_DIR})
+target_compile_definitions(run_tests PRIVATE PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
