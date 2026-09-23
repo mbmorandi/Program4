@@ -9,7 +9,8 @@ using std::endl;
 Menu::Menu() : 
     menuIsOpen{false},
     semesterOpen{false},
-    setupThisRun{false}
+    setupThisRun{false},
+    outFile{OUTPUT_FILE}
 {}
 
 //class methods
@@ -299,16 +300,22 @@ void Menu::printGradeData(){
         char order;
         cout << "How would you like to display student grade data? Enter A for Alphabetically or N for Numerically: ";
         cin >> order;
+        string orderName;
         if(std::toupper(order) == 'A'){
             semester.sortStudentsAlpha();
-            semester.printStudentData();
+            orderName = "alphabetical";
         } else if (std::toupper(order) == 'N'){
             semester.sortStudentsNum();
-            semester.printStudentData();
+            orderName = "student number";
         } else {
             cout << "you entered an invalid option. Exiting to the main screen." << endl;
             return;
         }
+        // print to the screen, and write the same data to Grades.out
+        semester.printStudentData(cout);
+        outFile << "===== Grade data (" << orderName << " order) =====" << endl;
+        semester.printStudentData(outFile);
+        cout << "Grade data written to " << OUTPUT_FILE << "." << endl;
     } else {
         cout << "You must setup the semester before you can view grades. exiting to the main menu." << endl;
         return;

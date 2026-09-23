@@ -50,5 +50,5 @@ class Semester{
         void printStudentData();
         void saveData(const std::string& fileName);
         bool loadData(const std::string& fileName);
-        void printStudentData(std::ostream& out); //need imp
+        void printStudentData(std::ostream& out);
 };

@@ -70,7 +70,7 @@ void StudentRecord::setTestAvg(int avg){
 }
 
 //class methods
-void StudentRecord::printStudentInfo(){
-    cout << "Student Name: " << name << endl;
-    cout << "Student ID: " << student_ID << endl;
+void StudentRecord::printStudentInfo(std::ostream& out){
+    out << "Student Name: " << name << endl;
+    out << "Student ID: " << student_ID << endl;
 }

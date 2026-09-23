@@ -38,5 +38,5 @@ class StudentRecord{
         void setTestAvg(int avg);
 
         //class methods
-        void printStudentInfo();
+        void printStudentInfo(std::ostream& out = std::cout);
 };

@@ -144,43 +144,48 @@ void Semester::sortStudentsNum(){
 }
 
 void Semester::printStudentData(){
+    printStudentData(std::cout);
+}
+
+// same printout, sent to any stream (the screen or a file)
+void Semester::printStudentData(std::ostream& out){
     for(int i = 0; i < numStudents; i++){
         //get student
         StudentRecord student = students[i];
 
         //print student name and ID
-        student.printStudentInfo();
-        
+        student.printStudentInfo(out);
+
         //print student program grades
         if(numProg > 0){
-            std::cout << "Student Program Grades: ";
+            out << "Student Program Grades: ";
             for(int j = 0; j < numProg; j++){
-                std::cout << student.getProgGrade(j) << ", ";
+                out << student.getProgGrade(j) << ", ";
             }
         }
 
         //print student test grades
         if(numTest > 0){
-            std::cout << "\nStudent Test Grades: ";
+            out << "\nStudent Test Grades: ";
             for(int j = 0; j < numTest; j++){
-                std::cout << student.getTestGrade(j) << ", ";
-            }  
+                out << student.getTestGrade(j) << ", ";
+            }
         }
         //print student final exam grade
         if(numFin > 0){
-            std::cout << "\nStudent Final Exam Grade: ";
-            std::cout << student.getFinalExGrade() << std::endl;   
+            out << "\nStudent Final Exam Grade: ";
+            out << student.getFinalExGrade() << std::endl;
         }
 
         if(finalGradeCalculated){
-            std::cout << "\nStudent Average Program Grade: ";
-            std::cout << student.getProgAvg() << std::endl;
+            out << "\nStudent Average Program Grade: ";
+            out << student.getProgAvg() << std::endl;
 
-            std::cout << "Student Average Test Grade: ";
-            std::cout << student.getTestAvg() << std::endl;
+            out << "Student Average Test Grade: ";
+            out << student.getTestAvg() << std::endl;
 
         }
-        std::cout << std::endl;
+        out << std::endl;
 
     }
 
