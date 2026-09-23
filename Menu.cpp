@@ -1,6 +1,7 @@
 #include "Menu.h"
 #include <iostream>
 #include <fstream>
+#include <cmath>
 using std::string;
 using std::cout;
 using std::cin;
@@ -189,7 +190,7 @@ void Menu::recordFinalExamGrade(){
 
 }
 void Menu::changeGrade(){
-    bool studentFound;
+    bool studentFound = false;
     if(!semesterOpen){
         //semester not setup
         cout << "Please setup a new semester before changing student grades. Exiting to the main menu." << endl;
@@ -307,14 +308,14 @@ void Menu::changeGrade(){
                     writeTransaction("C: rejected - invalid grade type");
                     return;
                 }
-        } else {
-            //student not found
-            studentFound = false;
+                // the student was found and handled, so stop searching
+                break;
+            }
         }
+        // only after checking every student do we know the ID isn't there
         if(!studentFound){
             cout << "No student found using ID number: " << studentID << endl;
             writeTransaction("C: rejected - no student with ID " + to_string(studentID));
-        }
         }
     }
     
@@ -335,25 +336,22 @@ void Menu::calculateFinalGrade(){
                 for(int j = 0; j < semester.getNumProg(); j++){
                     pAvg += student.getProgGrade(j);
                 }
-                student.setProgAvg(pAvg/semester.getNumProg());
-            } else {
-                //what to do when there are no programs to average
-                return;
+                // round to the nearest whole number (22.5 -> 23) instead of cutting off the decimals
+                student.setProgAvg(static_cast<int>(std::lround(pAvg/semester.getNumProg())));
             }
+            // no programs this semester: skip the program average, keep going
 
             if(semester.getNumTest() > 0){
                 double tAvg = 0;
                 for(int j = 0; j < semester.getNumTest(); j++){
                     tAvg += student.getTestGrade(j);
                 }
-                student.setTestAvg(tAvg/semester.getNumTest());
-            } else {
-                //what to do when there are no tests to average
-                return;
+                student.setTestAvg(static_cast<int>(std::lround(tAvg/semester.getNumTest())));
             }
-            semester.setFinalGradeCalc(true);
+            // no tests this semester: skip the test average, keep going
         }
-        
+        semester.setFinalGradeCalc(true);
+
     }
 }
 void Menu::printGradeData(){

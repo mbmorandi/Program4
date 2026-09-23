@@ -192,13 +192,14 @@ void Semester::printStudentData(std::ostream& out){
             out << student.getFinalExGrade() << std::endl;
         }
 
-        if(finalGradeCalculated){
+        // only show an average for a category this semester actually has
+        if(finalGradeCalculated && numProg > 0){
             out << "\nStudent Average Program Grade: ";
             out << student.getProgAvg() << std::endl;
-
+        }
+        if(finalGradeCalculated && numTest > 0){
             out << "Student Average Test Grade: ";
             out << student.getTestAvg() << std::endl;
-
         }
         out << std::endl;
 
