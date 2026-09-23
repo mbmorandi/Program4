@@ -439,6 +439,7 @@ void Menu::setNewSemester(){
     
 }
 void Menu::quit(){
+    //FILE OUTPUT GOES HERE
     cout << "Exiting the program." << endl;
     menuIsOpen = false;
 }
