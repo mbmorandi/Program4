@@ -8,7 +8,8 @@ using std::endl;
 
 Menu::Menu() : 
     menuIsOpen{false},
-    semesterOpen{false}
+    semesterOpen{false},
+    setupThisRun{false}
 {}
 
 //class methods
@@ -22,7 +23,7 @@ void Menu::addStudent(){
         cin.ignore();
         cout << "Please enter the students name (last, first): ";
         std::getline(cin, name);
-        cout << "Please enter the students ID number (1-9,999):  ";
+        cout << "Please enter the students ID number (1-9,999): ";
         cin >> studentNum;
         //checking if ID is available
         for(int i = 0; i < semester.getNumStu(); i++){
@@ -55,7 +56,7 @@ void Menu::recordStudentProgramGrades(){
             int grade;
 
             //getting program number from user
-            cout << "Please enter the programming assignment number you would like to record (1 - " << semester.getNumProg() << ")" << std::endl;
+            cout << "Please enter the programming assignment number you would like to record (1 - " << semester.getNumProg() << "): ";
             cin >> test;
             if(test > semester.getNumProg() || test < 1){
                 std::cout << "You entered an invalid number. Exiting to the main screen." << std::endl;
@@ -70,7 +71,7 @@ void Menu::recordStudentProgramGrades(){
             }
             //printing out students and asking for new student grade
             for(int i = 0; i < semester.getNumStu(); i++){
-                std::cout << "Please enter a grade for student: " << semester.getStudent(i).getName() << std::endl;
+                std::cout << "Please enter a grade for student " << semester.getStudent(i).getName() << ": ";
                 cin >> grade;
                 if(grade <= 100 && grade >= 0){
                     semester.getStudent(i).setProgGrade(test-1, grade);
@@ -94,7 +95,7 @@ void Menu::recordStudentTestGrades(){
             int grade;
 
             //getting program number from user
-            cout << "Please enter the test number you would like to record (1 - " << semester.getNumTest() << ")" << std::endl;
+            cout << "Please enter the test number you would like to record (1 - " << semester.getNumTest() << "): ";
             cin >> test;
             if(test > semester.getNumTest() || test < 1){
                 std::cout << "You entered an invalid number. Exiting to the main screen." << std::endl;
@@ -109,7 +110,7 @@ void Menu::recordStudentTestGrades(){
             }
             //printing out students and asking for new student grade
             for(int i = 0; i < semester.getNumStu(); i++){
-                std::cout << "Please enter a grade for student: " << semester.getStudent(i).getName() << std::endl;
+                std::cout << "Please enter a grade for student " << semester.getStudent(i).getName() << ": ";
                 cin >> grade;
                 if(grade <= 100 && grade >= 0){
                     semester.getStudent(i).setTestGrade(test - 1, grade);
@@ -128,7 +129,7 @@ void Menu::recordFinalExamGrade(){
         } else {
             if(!semester.isFinalRecorded()){
             for(int i = 0; i < semester.getNumStu(); i++){
-                std::cout << "Please enter a grade for student: " << semester.getStudent(i).getName() << std::endl;
+                std::cout << "Please enter a grade for student " << semester.getStudent(i).getName() << ": ";
                 cin >> grade;
                 if(grade <= 100 && grade >= 0){
                     semester.getStudent(i).setFinExGrade(grade);
@@ -164,7 +165,7 @@ void Menu::changeGrade(){
                 studentFound = true;
                 //student is found
                 cout << "Please enter the type of grade you would like to change." << endl;
-                cout << "[P] = Program \t[T] = Test\t[F] = Final" << endl;
+                cout << "[P] = Program \t[T] = Test\t[F] = Final: ";
                 
                 char userInput;
                 cin >> userInput;
@@ -176,7 +177,7 @@ void Menu::changeGrade(){
                         return;
                     } else {
                     //there are tests assigned
-                    cout << "What test number would you like to change? Enter a value between (1 - " << semester.getNumTest() << ")";
+                    cout << "What test number would you like to change? Enter a value between (1 - " << semester.getNumTest() << "): ";
                     int testToChange;
                     cin >> testToChange;
                     if(testToChange > semester.getNumTest() || testToChange < 1){
@@ -203,7 +204,7 @@ void Menu::changeGrade(){
                         cout << "There are no program assignents for the semester. Exiting to main menu." << endl;
                         return;
                     } else {
-                        cout << "What program number would you like to change? Enter a value between (1 - " << semester.getNumProg() << ")";
+                        cout << "What program number would you like to change? Enter a value between (1 - " << semester.getNumProg() << "): ";
                         int programToChange;
                         cin >> programToChange;
                         if(programToChange > semester.getNumProg() || programToChange < 1){
@@ -296,7 +297,7 @@ void Menu::printGradeData(){
 
     if(semesterOpen){
         char order;
-        cout << "How would you like to display student grade data? Enter A for Alphabetically or N for Numerically" << endl;
+        cout << "How would you like to display student grade data? Enter A for Alphabetically or N for Numerically: ";
         cin >> order;
         if(std::toupper(order) == 'A'){
             semester.sortStudentsAlpha();
@@ -316,13 +317,16 @@ void Menu::printGradeData(){
 }
 void Menu::setNewSemester(){
     //check if semester has already been opened
-    if(!semesterOpen){
+    if(!setupThisRun){
+        // a new semester ignores anything loaded from Grades.dat and starts empty
+        semester.reset();
+        semesterOpen = false;
         int numTests;
         int numProg;
         int numFinal;
         cout << "Welcome. To begin setting up the new semester's gradebook, please answer the following questions." << endl;
         //prompting for number of programming assignments
-        cout << "How many programming assignments will you assign this semester? (0-6)";
+        cout << "How many programming assignments will you assign this semester? (0-6): ";
         cin >> numProg;
         if(numProg > MAX_PROG || numProg < 0){
             cout << "You entered an invalid number. Please enter a value between 0 and 6. Returning to main menu" << endl;
@@ -332,7 +336,7 @@ void Menu::setNewSemester(){
             semester.setNumP(numProg);
         }
         //prompting for number of tests
-        cout << "How many tests will you assign this semester? (0-4)";
+        cout << "How many tests will you assign this semester? (0-4): ";
         cin >> numTests;
         if(numTests> MAX_TESTS || numTests < 0){
             cout << "You entered an invalid number. Please enter a value between 0 and 4. Returning to main menu" << endl;
@@ -343,7 +347,7 @@ void Menu::setNewSemester(){
         }
 
         //prompting the user for number of finals
-        cout << "How many finals will you assign this semester? (0-1)";
+        cout << "How many finals will you assign this semester? (0-1): ";
         cin >> numFinal;
         if(numFinal > 1 || numFinal < 0){
             cout << "You entered an invalid number. Please enter a value between 0 and 1. Returning to main menu" << endl;
@@ -361,7 +365,7 @@ void Menu::setNewSemester(){
         cout << "We will now add the weighted values for your assignemnts, tests, and final." << endl;
         cout << "Your weighted values must have a sum of 100" << endl;
         if(semester.getNumProg() > 0){
-            cout << "What weight do you want to assign to programming assignments? (0 - " << maxWeight << ") ";
+            cout << "What weight do you want to assign to programming assignments? (0 - " << maxWeight << "): ";
             cin >> val1;
             //checking if input is in range
             if(val1 > maxWeight || val1 < 0){
@@ -375,7 +379,7 @@ void Menu::setNewSemester(){
         }
 
         if(semester.getNumTest() > 0){
-            cout << "What weight do you want to assign to the test assignemnts (0 - " << maxWeight << ") ";
+            cout << "What weight do you want to assign to the test assignemnts (0 - " << maxWeight << "): ";
             cin >> val2;
             if(val2 > maxWeight || val2 < 0){
                 cout << "You entered an invalid option. Exiting to the main menu..." << endl;
@@ -397,6 +401,7 @@ void Menu::setNewSemester(){
         if(val1+val2+val3 == 100){
             semester.setWeight(val1, val2, val3);
             semesterOpen = true;
+            setupThisRun = true;
         } else {
             cout << "The weighted sum does not equal 100. Exiting to the main menu." << endl;
             return;
@@ -422,6 +427,7 @@ void Menu::quit(){
     menuIsOpen = false;
 }
 void Menu::printMenu(){
+    cout << endl;
     cout << "\t\t------Grade Book Menu-----" << endl;
     cout << "S: setup new semester \t\t\tA: Add new student" << endl;
     cout << "P: record program assignment grades\tT: record test grades for students" << endl;
@@ -430,11 +436,19 @@ void Menu::printMenu(){
     cout << "Q: save and quit" << endl;
 }
 void Menu::openMenu(){
+    // load the grade book saved by the last run, if exists
+    if(semester.loadData(DATA_FILE)){
+        semesterOpen = true;
+        cout << "Loaded " << semester.getNumStu() << " students from " << DATA_FILE << "." << endl;
+    } else {
+        cout << "No saved grade book found. Use S to set up a new semester." << endl;
+    }
+
     menuIsOpen = true;
     char userChoice;
     while(menuIsOpen){
         printMenu();
-        cout << "Please select an option or press Q to save and quit" << endl;
+        cout << "Please select an option or press Q to save and quit: ";
         cin >> userChoice;
         switch(std::toupper(userChoice)){
             case 'S':

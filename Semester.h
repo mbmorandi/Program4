@@ -43,11 +43,12 @@ class Semester{
         void setFinalRecorded(bool tf);
 
         //class methods
+        void reset();
         void addStudent(std::string stuName, int stuNum);
         void sortStudentsAlpha();
         void sortStudentsNum();
         void printStudentData();
-        void saveData(const std::string& fileName); //need imp
-        bool loadData(const std::string& fileName); // need imp
+        void saveData(const std::string& fileName);
+        bool loadData(const std::string& fileName);
         void printStudentData(std::ostream& out); //need imp
 };

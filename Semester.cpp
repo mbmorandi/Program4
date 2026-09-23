@@ -76,7 +76,26 @@ void Semester::setTestRecorded(int index){
 void Semester::setFinalRecorded(bool tf){
     finalRecorded = tf;
 }
+
 //class methods
+void Semester::reset(){
+    numStudents = 0;
+    numProg = 0;
+    numTest = 0;
+    numFin = 0;
+    for(int i = 0; i < NUM_DIFF_WORK; i++){
+        weighted[i] = 0;
+    }
+    finalGradeCalculated = false;
+    for(int i = 0; i < MAX_PROG; i++){
+        progRecorded[i] = false;
+    }
+    for(int i = 0; i < MAX_TESTS; i++){
+        testRecorded[i] = false;
+    }
+    finalRecorded = false;
+}
+
 void Semester::addStudent(std::string stuName, int stuNum){
     //create new student
     StudentRecord newStudent(stuName, stuNum);
@@ -207,4 +226,69 @@ void Semester::saveData(const std::string& fileName){
         out << " " << student.getProgAvg();
         out << " " << student.getTestAvg() << std::endl;
     }
+}
+
+bool Semester::loadData(const std::string& fileName){
+    std::ifstream in(fileName);
+    if(!in){
+        return false;
+    }
+    reset();
+
+    // semester settings
+    in >> numProg >> numTest >> numFin;
+    in >> weighted[0] >> weighted[1] >> weighted[2];
+    if(!in || numProg < 0 || numProg > MAX_PROG || numTest < 0 || numTest > MAX_TESTS
+       || numFin < 0 || numFin > 1){
+        reset();
+        return false;
+    }
+
+    // recorded flags
+    for(int i = 0; i < numProg; i++){
+        in >> progRecorded[i];
+    }
+    for(int i = 0; i < numTest; i++){
+        in >> testRecorded[i];
+    }
+    in >> finalRecorded >> finalGradeCalculated;
+
+    // students
+    int count;
+    in >> count;
+    if(!in || count < 0 || count > MAX_STUDENTS){
+        reset();
+        return false;
+    }
+    for(int i = 0; i < count; i++){
+        std::string name;
+        int id;
+        int grade;
+        // skip the line break left after the numbers, then read the whole name line
+        in >> std::ws;
+        std::getline(in, name);
+        in >> id;
+        StudentRecord student(name, id);
+        for(int j = 0; j < numProg; j++){
+            in >> grade;
+            student.setProgGrade(j, grade);
+        }
+        for(int j = 0; j < numTest; j++){
+            in >> grade;
+            student.setTestGrade(j, grade);
+        }
+        in >> grade;
+        student.setFinExGrade(grade);
+        in >> grade;
+        student.setProgAvg(grade);
+        in >> grade;
+        student.setTestAvg(grade);
+        if(!in){
+            reset();
+            return false;
+        }
+        students[numStudents] = student;
+        numStudents++;
+    }
+    return true;
 }
